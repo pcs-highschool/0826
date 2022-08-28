@@ -1,6 +1,7 @@
 <template>
-  <div v-if="inputStatus == null && this.$userList.length < 1">
-    <input type="button" @click="fetchData()" value="값 불러오기" />
+  <div v-if="this.$userList.length < 1">
+    loading
+    {{inputStatus}}
   </div>
 
   <div v-else>
@@ -17,17 +18,14 @@ export default {
   },
 
   methods: {
-    fetchData: function () {
-      this.inputStatus = "input";
-    },
   },
 
-  mounted() {
+  async mounted() {
     let self = this;
 
     console.log(this.$userList);
 
-    this.$axios
+    await this.$axios
       .get("https://jsonplaceholder.typicode.com/todos")
       .then(function (res) {
         if (res.status !== 200) {
@@ -39,8 +37,9 @@ export default {
       });
       
     setTimeout(() => {
-      this.inputStatus = "input";
-    }, 1);
+      console.log("asd");
+      this.inputStatus = "input"
+    }, 100);
   },
 };
 </script>
